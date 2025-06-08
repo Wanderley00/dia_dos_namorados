@@ -1,271 +1,394 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Surpresa ❤️</title>
-    <style>
-        /* Copyright (c) 2025 by NIDAL (https://codepen.io/Nidal95/pen/WbvNarw) - Adaptado para responsividade */
+  <meta charset="UTF-8">
+  <title>Nossa Playlist do Amor ❤️</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css'>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Poppins:300,400,500,600&display=swap'>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      color: #2c1810;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #000000 0%, #000000 50%, #000000     100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-      * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-      }
+    .romantic-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
 
-      body {
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-          background: #000000;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          padding: 20px;
-      }
+    .romantic-header h1 {
+      font-family: "Dancing Script", cursive;
+      font-size: 3rem;
+      margin: 0;
+      font-weight: 700;
+    }
 
-      .slider-container {
-          position: relative;
-          width: 100%; 
-          max-width: 700px;
-          height: auto;
-          aspect-ratio: 7 / 5;
-          min-height: 500px;
-          border-radius: 20px;
-          overflow: hidden;
-          box-shadow: 0 20px 40px rgba(255, 255, 255, 0.1);
-          background: #FF69B4;
-          display: flex;
-          flex-direction: column;
-          
-          /* LINHA ADICIONADA ABAIXO */
-          animation: appear 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-      }
+    .romantic-header p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+      opacity: 0.9;
+    }
 
-      .color-overlay {
-          position: absolute;
-          top: -100%;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: #e94b4b;
-          transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          z-index: 10;
-      }
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-      .color-overlay.slide-down {
-          transform: translateY(100%);
-      }
+    .heart {
+      position: absolute;
+      color: rgba(0, 0, 0, 0.7);
+      animation: float 6s ease-in-out infinite;
+      font-size: 20px;
+    }
 
-      .content {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: center;
-          z-index: 5;
-          padding: 25px 5% 70px 5%; /* Padding lateral em porcentagem */
-      }
+    @keyframes float {
+      0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
 
-      .product-name {
-          font-size: 42px;
-          font-weight: bold;
-          color: white;
-          text-align: center;
-          margin: 20px 0;
-          min-height: 60px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 15;
-          position: relative;
-          margin-top: -2px;
-          gap: 20px;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      }
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      max-width: 400px;
+      width: 100%;
+      padding: 0;
+      border-radius: 25px;
+      color: #2c1810;
+      font-weight: 300;
+      box-shadow: 0px 20px 60px 0px rgba(255, 105, 180, 0.4);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+    }
 
-      .word-part {
-          transition: transform 0.8s ease-out;
-          display: inline-block;
-      }
+    .current-song {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 30px 20px;
+      border-radius: 25px;
+      color: #2c1810;
+      background: linear-gradient(135deg, #fff 0%, #ffeef0 100%);
+    }
 
-      .couple-image {
-          width: 80%; /* Largura relativa */
-          max-width: 350px; /* Limite máximo */
-          height: auto; /* Altura automática para manter proporção */
-          aspect-ratio: 35 / 24;
-          margin: 15px 0;
-          object-fit: cover;
-          transition: opacity 1.5s ease;
-          position: relative;
-          z-index: 5;
-          border-radius: 15px;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-      }
+    .current-song audio {
+      display: none;
+    }
 
-      .love-panel {
-          background: rgba(255, 255, 255, 0.95);
-          border-radius: 15px;
-          padding: 15px; /* Padding reduzido para telas menores */
-          display: flex;
-          flex-wrap: wrap; /* Permite que os itens quebrem a linha */
-          justify-content: center; /* Centraliza os itens quando quebram a linha */
-          align-items: center;
-          gap: 15px;
-          margin-top: 15px;
-          margin-bottom: 60px; /* Espaço para os controles */
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-          position: relative;
-          z-index: 15;
-          width: 95%; /* Largura relativa */
-          backdrop-filter: blur(10px);
-      }
+    .img-wrap {
+      position: relative;
+      margin: 0 auto;
+      width: 280px;
+      height: 220px;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0px 15px 40px 0px rgba(255, 105, 180, 0.4);
+      border: 3px solid rgba(255, 182, 193, 0.3);
+    }
 
-      .love-item {
-          text-align: center;
-          flex: 1 1 80px; /* Permite que os itens cresçam, encolham e tenham uma base de 80px */
-      }
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-      .love-value {
-          font-size: 14px;
-          font-weight: bold;
-          color: #2c3e50;
-          margin-bottom: 5px;
-          transition: all 0.4s ease;
-      }
+    .song-name {
+      margin-top: 25px;
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      color: #8B4B7A;
+    }
 
-      .love-label {
-          font-size: 11px;
-          color: #7f8c8d;
-          line-height: 1.2;
-      }
+    .song-autor {
+      color: #D8527A;
+      font-weight: 400;
+      margin-top: 5px;
+    }
 
-      .controls {
-          position: absolute;
-          bottom: 20px;
-          left: 50%;
-          transform: translateX(-50%);
-          display: flex;
-          gap: 12px;
-          z-index: 20;
-      }
+    .time {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      width: 280px;
+      font-size: 14px;
+      color: #8B4B7A;
+    }
 
-      .control-dot {
-          width: 14px;
-          height: 14px;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.5);
-          cursor: pointer;
-          transition: all 0.3s ease;
-          border: 2px solid rgba(255, 255, 255, 0.8);
-      }
+    #timeline {
+      position: relative;
+      margin: 15px auto;
+      width: 280px;
+      height: 6px;
+      background: rgba(216, 82, 122, 0.3);
+      border-radius: 6px;
+      cursor: pointer;
+    }
 
-      .control-dot.active {
-          background: white;
-          transform: scale(1.3);
-          box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
-      }
+    #timeline:hover .hover-playhead {
+      opacity: 1;
+    }
 
-      .heart-float {
-          position: absolute;
-          color: rgba(255, 255, 255, 0.3);
-          font-size: 20px;
-          animation: float 6s ease-in-out infinite;
-          z-index: 1;
-      }
+    #timeline:hover .hover-playhead::before {
+      opacity: 1;
+    }
 
-      @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
-          50% { transform: translateY(-20px) rotate(180deg); opacity: 0.7; }
-      }
+    #timeline:hover .hover-playhead::after {
+      opacity: 1;
+    }
 
-      @keyframes appear {
-          from {
-              transform: scale(0.9);
-              opacity: 0;
-          }
-          to {
-              transform: scale(1);
-              opacity: 1;
-          }
-      }
+    #timeline #playhead {
+      position: relative;
+      z-index: 2;
+      width: 0;
+      height: 6px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #D8527A, #FF69B4);
+    }
 
-      /* --- Media Queries para Responsividade --- */
+    .hover-playhead {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      width: 0;
+      height: 6px;
+      opacity: 0;
+      border-radius: 6px;
+      background: rgba(255, 105, 180, 0.5);
+      transition: opacity 0.3s;
+    }
 
-      /* Para telas menores que 720px (Tablets em modo retrato e celulares) */
-      @media (max-width: 720px) {
-          .product-name {
-              font-size: 36px; /* Reduz a fonte do título */
-              gap: 15px;
-          }
+    .hover-playhead::before {
+      opacity: 0;
+      content: attr(data-content);
+      display: block;
+      position: absolute;
+      top: -35px;
+      right: -25px;
+      width: 45px;
+      padding: 5px;
+      text-align: center;
+      color: white;
+      background: #D8527A;
+      border-radius: 15px;
+      font-size: 12px;
+    }
 
-          .love-panel {
-              padding: 15px 10px;
-              gap: 10px;
-              width: 92%;
-          }
+    .hover-playhead::after {
+      opacity: 0;
+      content: "";
+      display: block;
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      border-top: 8px solid #D8527A;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+    }
 
-          .love-item {
-              flex-basis: 70px; /* Reduz a base do item para caberem mais por linha */
-          }
+    .controls {
+      margin-top: 20px;
+    }
 
-          .love-value {
-              font-size: 13px;
-          }
+    .controls button {
+      color: #D8527A;
+      border-radius: 50%;
+      margin: 0 15px;
+      font-size: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
 
-          .love-label {
-              font-size: 10px;
-          }
-      }
+    .controls button:focus {
+      outline: none;
+    }
 
-      /* Para telas menores que 480px (Celulares) */
-      @media (max-width: 480px) {
-          body {
-              padding: 10px; /* Reduz o padding do corpo */
-          }
+    .controls button.play {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #D8527A;
+      background: linear-gradient(135deg, #fff, #ffeef0);
+      box-shadow: 0px 5px 15px rgba(216, 82, 122, 0.3);
+    }
 
-          .slider-container {
-              min-height: 480px; /* Ajusta a altura mínima */
-          }
+    .controls button.play:hover {
+      transform: scale(1.1);
+      box-shadow: 0px 8px 25px rgba(216, 82, 122, 0.4);
+    }
 
-          .content {
-              padding: 20px 5% 60px 5%; /* Ajusta o padding interno */
-          }
+    .controls button.play .fa-play {
+      transform: translateX(2px);
+    }
 
-          .product-name {
-              font-size: 28px; /* Fonte ainda menor para o título */
-              margin: 15px 0;
-          }
+    .controls button.prev-next {
+      width: 45px;
+      height: 45px;
+      border: 1px solid rgba(216, 82, 122, 0.3);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+    }
 
-          .couple-image {
-              width: 85%; /* Ajusta a largura da imagem */
-          }
+    .controls button.prev-next:hover {
+      transform: scale(1.2);
+      background: #ffeef0;
+    }
 
-          .love-panel {
-              /* Permite que no máximo 3 itens fiquem por linha */
-              justify-content: space-around;
-          }
+    .play-list {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      max-height: 300px;
+      overflow-y: scroll;
+      background: linear-gradient(135deg, #ffeef0, #fff);
+    }
 
-          .love-item {
-            flex-basis: 30%; /* Cada item ocupa cerca de 30% da largura */
-            margin-bottom: 10px; /* Adiciona espaço quando quebrar a linha */
-          }
+    .track {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 15px;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.7);
+    }
 
-          .love-value {
-              font-size: 12px;
-          }
+    .track:hover {
+      background: rgba(255, 182, 193, 0.2);
+      border-color: rgba(216, 82, 122, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0px 5px 15px rgba(255, 105, 180, 0.2);
+    }
 
-          .controls {
-              bottom: 15px; /* Sobe um pouco os controles */
-          }
+    .track.current-audio {
+      background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 105, 180, 0.2));
+      box-shadow: 0px 5px 20px rgba(255, 105, 180, 0.3);
+      border-color: #D8527A;
+    }
 
-          .control-dot {
-              width: 12px;
-              height: 12px;
-          }
-      }
-      @media screen and (max-width: 32rem) {
+    .track.play-now {
+      background: linear-gradient(135deg, rgba(255, 182, 193, 0.4), rgba(255, 105, 180, 0.3));
+      box-shadow: 0px 5px 20px rgba(255, 105, 180, 0.4);
+      position: relative;
+    }
+
+    .track.play-now:after {
+      content: "♪";
+      display: block;
+      position: absolute;
+      right: 15px;
+      font-size: 20px;
+      color: #D8527A;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .track-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 182, 193, 0.3);
+    }
+
+    .track-discr {
+      margin-left: 15px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .track-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: #8B4B7A;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-author {
+      font-weight: 300;
+      color: #D8527A;
+      font-size: 14px;
+    }
+
+    .track-duration {
+      min-width: 45px;
+      margin-left: 15px;
+      font-weight: 400;
+      color: #8B4B7A;
+      font-size: 14px;
+    }
+
+    .play-list::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .play-list::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #D8527A, #FF69B4);
+      border-radius: 6px;
+    }
+
+    .play-list::-webkit-scrollbar-track {
+      background: rgba(216, 82, 122, 0.1);
+      border-radius: 6px;
+    }
+
+    .love-message {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 15px;
+      border-radius: 20px;
+      color: #8B4B7A;
+      font-size: 14px;
+      box-shadow: 0px 5px 15px rgba(255, 105, 180, 0.3);
+      z-index: 3;
+    }
+
+    @media (max-width: 480px) {
+      .romantic-header h1 { font-size: 2.5rem; }
+      .card { max-width: 350px; margin: 0 10px; }
+      .img-wrap { width: 250px; height: 190px; }
+      .time, #timeline { width: 250px; }
+    }
+    @media screen and (max-width: 32rem) {
             .col {
                 width: 100%;
                 margin: 0 0 2rem 0;
@@ -295,256 +418,267 @@
             box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
             background-color: #f0f0f0;
         }
+
     </style>
+  </style>
 </head>
 <body>
-    <div class="slider-container">
-        <!-- Corações flutuantes decorativos -->
-        <div class="heart-float" style="top: 10%; left: 10%;">💕</div>
-        <div class="heart-float" style="top: 20%; right: 15%; animation-delay: -2s;">❤️</div>
-        <div class="heart-float" style="bottom: 30%; left: 20%; animation-delay: -4s;">💖</div>
-        <div class="heart-float" style="top: 60%; right: 10%; animation-delay: -1s;">💝</div>
+  <div class="floating-hearts">
+    <div class="heart" style="left: 10%; animation-delay: 0s;">💕</div>
+    <div class="heart" style="left: 20%; animation-delay: 1s;">💖</div>
+    <div class="heart" style="left: 30%; animation-delay: 2s;">💗</div>
+    <div class="heart" style="left: 40%; animation-delay: 3s;">💝</div>
+    <div class="heart" style="left: 50%; animation-delay: 4s;">💘</div>
+    <div class="heart" style="left: 60%; animation-delay: 5s;">💕</div>
+    <div class="heart" style="left: 70%; animation-delay: 1.5s;">💖</div>
+    <div class="heart" style="left: 80%; animation-delay: 2.5s;">💗</div>
+    <div class="heart" style="left: 90%; animation-delay: 3.5s;">💝</div>
+  </div>
 
-        <div class="content">
-            <div class="color-overlay"></div>
-            <div class="product-name">
-                <span class="word-part first-word">Eu</span>
-                <span class="word-part second-word">Te Amo</span>
-            </div>
-            <img class="couple-image" src="imagem1.jpg" alt="Nossa foto ❤️">
-            <div class="love-panel">
-                <div class="love-item">
-                    <div class="love-value">1 ano</div>
-                    <div class="love-label">Ao seu lado</div>
-                </div>
-                <div class="love-item">
-                    <div class="love-value">20/05/2024</div>
-                    <div class="love-label">Desde</div>
-                </div>
-                <div class="love-item">
-                    <div class="love-value">Todos os dias</div>
-                    <div class="love-label">Pensando em Você</div>
-                </div>
-                <div class="love-item">
-                    <div class="love-value">∞+1</div>
-                    <div class="love-label">Razões Te Amar</div>
-                </div>
-                <div class="love-item">
-                    <div class="love-value">❤️</div>
-                    <div class="love-label">Para Sempre</div>
-                </div>
-            </div>
-        </div>
+  <div class="romantic-header">
+    <h1>Nossa Playlist do Amor</h1>
+    <p>As músicas que me lembram você ❤️</p>
+  </div>
 
-        <div class="controls">
-            <div class="control-dot active" data-index="0"></div>
-            <div class="control-dot" data-index="1"></div>
-            <div class="control-dot" data-index="2"></div>
-        </div>
-    </div>
+  <div id="root"></div>
 
-    <script>
-        const loveMessages = [
-          {
-            name: ["Meu", "Amor"],
-            color: "#FF69B4",
-            image: "imagem1.jpg",
-            stats: ["1 ano", "20/05/2024", "Todos os dias", "∞+1", "❤️"]
-          },
-          {
-            name: ["Minha", "Branquela"],
-            color: "#FF1493",
-            image: "imagem2.jpg",
-            stats: ["1 ano", "20/05/2024", "Sempre", "Todas", "💕"]
-          },
-          {
-            name: ["Te", "Amo"],
-            color: "#DC143C",
-            image: "imagem3.jpg",
-            stats: ["1 ano", "20/05/2024", "Todo segundo", "999999", "💖"]
-          }
-        ];
+  <div class="love-message">
+    Feito com 💕 para você
+  </div>
 
-        let currentIndex = 0;
-        let isAnimating = false;
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/react/16.8.6/umd/react.production.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.8.6/umd/react-dom.production.min.js'></script>
+  
+  <script>
+    function _defineProperty(obj, key, value) {
+      if (key in obj) {
+        Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });
+      } else {
+        obj[key] = value;
+      }
+      return obj;
+    }
 
-        const container = document.querySelector(".slider-container");
-        const overlay = document.querySelector(".color-overlay");
-        const firstWord = document.querySelector(".first-word");
-        const secondWord = document.querySelector(".second-word");
-        const imageElement = document.querySelector(".couple-image");
-        const loveValues = document.querySelectorAll(".love-value");
-        const dots = document.querySelectorAll(".control-dot");
-
-        function initSlider() {
-          const currentMessage = loveMessages[currentIndex];
-          container.style.background = currentMessage.color;
-          firstWord.textContent = currentMessage.name[0];
-          secondWord.textContent = currentMessage.name[1];
-          imageElement.src = currentMessage.image;
-        }
-
-        function morphWords(fromWords, toWords, onComplete) {
-          const [fromFirst, fromSecond] = fromWords;
-          const [toFirst, toSecond] = toWords;
-
-          firstWord.style.transform = "translateX(0)";
-          secondWord.style.transform = "translateX(0)";
-
-          const maxMoveDistance = 20;
-
-          let step = 0;
-          const totalSteps = 40;
-
-          function nextFrame() {
-            if (step < totalSteps) {
-              const progress = step / (totalSteps - 1);
-              const easeProgress = progress * progress * progress;
-
-              const moveDistance = maxMoveDistance * easeProgress;
-              firstWord.style.transform = `translateX(${moveDistance}px)`;
-              secondWord.style.transform = `translateX(-${moveDistance}px)`;
-
-              const firstCharsToShow = Math.max(
-                0,
-                Math.ceil(fromFirst.length * (1 - easeProgress))
-              );
-              const secondCharsToShow = Math.max(
-                0,
-                Math.ceil(fromSecond.length * (1 - easeProgress))
-              );
-
-              const currentFirst = fromFirst.substring(0, firstCharsToShow);
-              const currentSecond = fromSecond.substring(
-                fromSecond.length - secondCharsToShow
-              );
-
-              if (currentFirst !== firstWord.textContent) {
-                firstWord.textContent = currentFirst;
-              }
-              if (currentSecond !== secondWord.textContent) {
-                secondWord.textContent = currentSecond;
-              }
-
-              step++;
-              requestAnimationFrame(nextFrame);
-            } else {
-              setTimeout(() => {
-                let expandStep = 0;
-                const expandSteps = 40;
-
-                function expandFrame() {
-                  const expandProgress = expandStep / (expandSteps - 1);
-                  const easeExpandProgress =
-                    expandProgress * expandProgress * (3 - 2 * expandProgress);
-
-                  const returnDistance = maxMoveDistance * (1 - easeExpandProgress);
-                  firstWord.style.transform = `translateX(${returnDistance}px)`;
-                  secondWord.style.transform = `translateX(-${returnDistance}px)`;
-
-                  const firstCharsToShow = Math.ceil(
-                    toFirst.length * easeExpandProgress
-                  );
-                  const secondCharsToShow = Math.ceil(
-                    toSecond.length * easeExpandProgress
-                  );
-
-                  const currentFirst = toFirst.substring(0, firstCharsToShow);
-                  const currentSecond = toSecond.substring(
-                    toSecond.length - secondCharsToShow
-                  );
-
-                  if (currentFirst !== firstWord.textContent) {
-                    firstWord.textContent = currentFirst;
-                  }
-                  if (currentSecond !== secondWord.textContent) {
-                    secondWord.textContent = currentSecond;
-                  }
-
-                  if (expandStep < expandSteps) {
-                    expandStep++;
-                    requestAnimationFrame(expandFrame);
-                  } else {
-                    firstWord.style.transform = "translateX(0)";
-                    secondWord.style.transform = "translateX(0)";
-                    firstWord.textContent = toFirst;
-                    secondWord.textContent = toSecond;
-                    if (onComplete) onComplete();
-                  }
-                }
-
-                expandFrame();
-              }, 100);
+    class RomanticMusicPlayer extends React.Component {
+      constructor(...args) {
+        super(...args);
+        _defineProperty(this, "state", {
+          index: 0,
+          currentTime: '0:00',
+          musicList: [
+            {
+              name: 'Essência da Paixão',
+              author: 'Grupo Revelação',
+              img: 'essencia_da_paixao.jpg',
+              audio: 'essencia da paixao.mpeg',
+              duration: '4:17'
+            },
+            {
+              name: 'Anestesia',
+              author: 'Delacruz',
+              img: 'delacruz_anestesia.png',
+              audio: 'anestesia.mpeg',
+              duration: '5:05'
+            },
+            {
+              name: 'Mandona - Acústico',
+              author: 'Oriente, Mc Hariel',
+              img: 'mandona_hariel.png',
+              audio: 'mandona.mpeg',
+              duration: '4:00'
+            },
+            {
+              name: 'Química',
+              author: 'Mc Cabelinho',
+              img: 'quimica_cabelinho.png',
+              audio: 'quimica.mpeg',
+              duration: '3:35'
+            },
+            {
+              name: 'Favorita',
+              author: 'Yunk Vino',
+              img: 'favorita_yunkvino.png',
+              audio: 'favorita.mpeg',
+              duration: '3:37'
             }
-          }
-
-          nextFrame();
-        }
-
-        function animateLoveValues(newValues) {
-          loveValues.forEach((value, index) => {
-            setTimeout(() => {
-              value.style.opacity = "0";
-              setTimeout(() => {
-                value.textContent = newValues[index];
-                value.style.opacity = "1";
-              }, 150);
-            }, index * 80);
-          });
-        }
-
-        function changeSlide(newIndex) {
-          if (newIndex === currentIndex || isAnimating) return;
-
-          isAnimating = true;
-          const currentMessage = loveMessages[currentIndex];
-          const newMessage = loveMessages[newIndex];
-
-          overlay.style.background = newMessage.color;
-          overlay.classList.add("slide-down");
-
-          setTimeout(() => {
-            morphWords(currentMessage.name, newMessage.name);
-            animateLoveValues(newMessage.stats);
-
-            setTimeout(() => {
-              imageElement.src = newMessage.image;
-              imageElement.style.opacity = "0";
-
-              setTimeout(() => {
-                container.style.background = newMessage.color;
-                overlay.classList.remove("slide-down");
-                overlay.style.transform = "translateY(-100%)";
-
-                setTimeout(() => {
-                  imageElement.style.opacity = "1";
-                  overlay.style.transform = "";
-                  isAnimating = false;
-                }, 300);
-              }, 100);
-            }, 400);
-          }, 0);
-
-          dots[currentIndex].classList.remove("active");
-          dots[newIndex].classList.add("active");
-          currentIndex = newIndex;
-        }
-
-        function autoSlide() {
-          if (!isAnimating) {
-            const nextIndex = (currentIndex + 1) % loveMessages.length;
-            changeSlide(nextIndex);
-          }
-        }
-
-        dots.forEach((dot, index) => {
-          dot.addEventListener("click", () => changeSlide(index));
+          ],
+          pause: false
         });
 
-        initSlider();
-        setInterval(autoSlide, 5000);
-    </script>
-    </div>
+        _defineProperty(this, "changeCurrentTime", e => {
+          const duration = this.playerRef.duration;
+          const playheadWidth = this.timelineRef.offsetWidth;
+          const offsetWidth = this.timelineRef.offsetLeft;
+          const userClickWidth = e.clientX - offsetWidth;
+          const userClickWidthInPercent = userClickWidth * 100 / playheadWidth;
+
+          this.playheadRef.style.width = userClickWidthInPercent + "%";
+          this.playerRef.currentTime = duration * userClickWidthInPercent / 100;
+        });
+
+        _defineProperty(this, "hoverTimeLine", e => {
+          const duration = this.playerRef.duration;
+          const playheadWidth = this.timelineRef.offsetWidth;
+          const offsetWidth = this.timelineRef.offsetLeft;
+          const userClickWidth = e.clientX - offsetWidth;
+          const userClickWidthInPercent = userClickWidth * 100 / playheadWidth;
+
+          if (userClickWidthInPercent <= 100) {
+            this.hoverPlayheadRef.style.width = userClickWidthInPercent + "%";
+          }
+
+          const time = duration * userClickWidthInPercent / 100;
+          if (time >= 0 && time <= duration) {
+            this.hoverPlayheadRef.dataset.content = this.formatTime(time);
+          }
+        });
+
+        _defineProperty(this, "resetTimeLine", () => {
+          this.hoverPlayheadRef.style.width = 0;
+        });
+
+        _defineProperty(this, "timeUpdate", () => {
+          const duration = this.playerRef.duration;
+          const playPercent = 100 * (this.playerRef.currentTime / duration);
+          this.playheadRef.style.width = playPercent + "%";
+          const currentTime = this.formatTime(parseInt(this.playerRef.currentTime));
+          this.setState({ currentTime });
+        });
+
+        _defineProperty(this, "formatTime", currentTime => {
+          const minutes = Math.floor(currentTime / 60);
+          let seconds = Math.floor(currentTime % 60);
+          seconds = seconds >= 10 ? seconds : "0" + seconds % 60;
+          return minutes + ":" + seconds;
+        });
+
+        _defineProperty(this, "updatePlayer", () => {
+          const { musicList, index } = this.state;
+          const currentSong = musicList[index];
+          this.playerRef.load();
+        });
+
+        _defineProperty(this, "nextSong", () => {
+          const { musicList, index, pause } = this.state;
+          this.setState({ index: (index + 1) % musicList.length });
+          this.updatePlayer();
+          if (pause) {
+            this.playerRef.play();
+          }
+        });
+
+        _defineProperty(this, "prevSong", () => {
+          const { musicList, index, pause } = this.state;
+          this.setState({ index: (index + musicList.length - 1) % musicList.length });
+          this.updatePlayer();
+          if (pause) {
+            this.playerRef.play();
+          }
+        });
+
+        _defineProperty(this, "playOrPause", () => {
+          const { pause } = this.state;
+          if (!pause) {
+            this.playerRef.play();
+          } else {
+            this.playerRef.pause();
+          }
+          this.setState({ pause: !pause });
+        });
+
+        _defineProperty(this, "clickAudio", key => {
+          const { pause } = this.state;
+          this.setState({ index: key });
+          this.updatePlayer();
+          if (pause) {
+            this.playerRef.play();
+          }
+        });
+      }
+
+      componentDidMount() {
+        this.playerRef.addEventListener("timeupdate", this.timeUpdate, false);
+        this.playerRef.addEventListener("ended", this.nextSong, false);
+        this.timelineRef.addEventListener("click", this.changeCurrentTime, false);
+        this.timelineRef.addEventListener("mousemove", this.hoverTimeLine, false);
+        this.timelineRef.addEventListener("mouseout", this.resetTimeLine, false);
+      }
+
+      componentWillUnmount() {
+        this.playerRef.removeEventListener("timeupdate", this.timeUpdate);
+        this.playerRef.removeEventListener("ended", this.nextSong);
+        this.timelineRef.removeEventListener("click", this.changeCurrentTime);
+        this.timelineRef.removeEventListener("mousemove", this.hoverTimeLine);
+        this.timelineRef.removeEventListener("mouseout", this.resetTimeLine);
+      }
+
+      render() {
+        const { musicList, index, currentTime, pause } = this.state;
+        const currentSong = musicList[index];
+        
+        return React.createElement("div", { className: "card" },
+          React.createElement("div", { className: "current-song" },
+            React.createElement("audio", { ref: ref => this.playerRef = ref },
+              React.createElement("source", { src: currentSong.audio, type: "audio/mpeg" }),
+              "Seu navegador não suporta o elemento de áudio."
+            ),
+            React.createElement("div", { className: "img-wrap" },
+              React.createElement("img", { src: currentSong.img, alt: currentSong.name })
+            ),
+            React.createElement("span", { className: "song-name" }, currentSong.name),
+            React.createElement("span", { className: "song-autor" }, currentSong.author),
+            React.createElement("div", { className: "time" },
+              React.createElement("div", { className: "current-time" }, currentTime),
+              React.createElement("div", { className: "end-time" }, currentSong.duration)
+            ),
+            React.createElement("div", { ref: ref => this.timelineRef = ref, id: "timeline" },
+              React.createElement("div", { ref: ref => this.playheadRef = ref, id: "playhead" }),
+              React.createElement("div", { ref: ref => this.hoverPlayheadRef = ref, className: "hover-playhead", "data-content": "0:00" })
+            ),
+            React.createElement("div", { className: "controls" },
+              React.createElement("button", { onClick: this.prevSong, className: "prev prev-next current-btn" },
+                React.createElement("i", { className: "fas fa-backward" })
+              ),
+              React.createElement("button", { onClick: this.playOrPause, className: "play current-btn" },
+                !pause ? 
+                  React.createElement("i", { className: "fas fa-play" }) : 
+                  React.createElement("i", { className: "fas fa-pause" })
+              ),
+              React.createElement("button", { onClick: this.nextSong, className: "next prev-next current-btn" },
+                React.createElement("i", { className: "fas fa-forward" })
+              )
+            )
+          ),
+          React.createElement("div", { className: "play-list" },
+            musicList.map((music, key) =>
+              React.createElement("div", {
+                key: key,
+                onClick: () => this.clickAudio(key),
+                className: "track " + 
+                  (index === key && !pause ? 'current-audio' : '') + 
+                  (index === key && pause ? 'play-now' : '')
+              },
+                React.createElement("img", { className: "track-img", src: music.img, alt: music.name }),
+                React.createElement("div", { className: "track-discr" },
+                  React.createElement("span", { className: "track-name" }, music.name),
+                  React.createElement("span", { className: "track-author" }, music.author)
+                ),
+                React.createElement("span", { className: "track-duration" },
+                  index === key ? currentTime : music.duration
+                )
+              )
+            )
+          )
+        );
+      }
+    }
+
+    ReactDOM.render(
+      React.createElement(RomanticMusicPlayer, null),
+      document.getElementById('root')
+    );
+  </script>
+</div>
     </div>
 
     <a href="index3.html" class="botao-proximo">Próximo</a>
