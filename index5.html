@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I love You</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #000000;
+            color: white;
+            font-family: sans-serif;
+            overflow: hidden; 
+        }
+
+        /* NOVA DIV PARA CORRIGIR O ESPAÇAMENTO */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #f0a5f0;
+            text-shadow: 0 0 8px #f0a5f0, 0 0 15px #f0a5f0;
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .10em;
+            animation: 
+                typing 3.5s steps(35, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+
+        img {
+    max-width: 400px; /* Ajuste o tamanho conforme desejar */
+    height: auto;
+    margin-top: 30px;
+    border-radius: 50%; /* Transforma em um círculo */
+}
+        
+        .botao-voltar {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background-color: #ffffff;
+            color: #151515;
+            padding: 12px 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        .botao-voltar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="content-wrapper">
+        <h1>Fiz tudo com carinho para você! ❤️</h1>
+        <img src="coelho.gif" alt="GIF de Corações">
+    </div>
+    
+    <a href="index7.html" class="botao-voltar">Próximo</a>
+
+</body>
+</html>
